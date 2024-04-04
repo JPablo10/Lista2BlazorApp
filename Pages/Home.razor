@@ -1,0 +1,77 @@
+﻿@page "/"
+@using Lista2BlazorApp.Models
+@using Lista2BlazorApp.Services
+
+<PageTitle>Home</PageTitle>
+
+<h1>Operaciones de Lista Enlazada Simple</h1>
+
+<input type="number" class="form-control mb-2" @bind="ValorNodo" placeholder="Ingrese el valor del nodo" />
+
+<button class="btn btn-primary" @onclick="InsertarNodo">Insertar Nodo</button>
+<button class="btn btn-secondary" @onclick="EliminarNodoAlInicio">Eliminar Nodo al Inicio</button>
+<button class="btn btn-dark" @onclick="EliminarNodoAlFinal">Eliminar Nodo al Final</button>
+<button class="btn btn-warning" @onclick="EliminarElementoX">Eliminar Nodo por Valor</button>
+<button class="btn btn-sucess" @onclick="EliminarNodoAntesDeX">Eliminar Nodo Antes de Valor</button>
+<button class="btn btn-danger" @onclick="EliminarNodoDespuesDeX">Eliminar Nodo Después de Valor</button>
+<button class="btn btn-info" @onclick="OrdenarLista">Ordenar Lista</button>
+
+<hr />
+
+<p class="bg-dark text-white">@Mensaje</p>
+
+<hr />
+
+<ul>
+    @foreach (var item in Lista)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+@code {
+    public int ValorNodo { get; set; }
+    public ListaEnlazadaSimple Lista { get; set; } = new();
+    string Mensaje = string.Empty;
+
+    void InsertarNodo()
+    {
+        Nodo nuevoNodo = new Nodo(ValorNodo);
+        Mensaje = Lista.InsertarNodo(nuevoNodo);
+        ValorNodo = 0;
+    }
+
+    void EliminarNodoAlInicio()
+    {
+        Mensaje = Lista.EliminarNodoAlInicio();
+    }
+
+    void EliminarNodoAlFinal()
+    {
+        Mensaje = Lista.EliminarNodoAlFinal();
+    }
+
+    void EliminarElementoX()
+    {
+        Mensaje = Lista.EliminarElementoX(ValorNodo);
+        ValorNodo = 0;
+    }
+
+    void EliminarNodoAntesDeX()
+    {
+        Mensaje = Lista.EliminarNodoAntesDeX(ValorNodo);
+        ValorNodo = 0;
+    }
+
+    void EliminarNodoDespuesDeX()
+    {
+        Mensaje = Lista.EliminarNodoDespuesDeX(ValorNodo);
+        ValorNodo = 0;
+    }
+
+    void OrdenarLista()
+    {
+        Lista.Ordenar();
+        Mensaje = "Lista ordenada!";
+    }
+}
